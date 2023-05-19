@@ -1,0 +1,8 @@
+{
+  "name": "\"Advanced Volume Control\"",
+  "description": "\"Control volume of multiple sound interfaces\"",
+  "uuid": "advancedvolumecontrol@mark.johnson.ubuntu.com",
+  "shell-version": [
+    "42"
+  ]
+}
