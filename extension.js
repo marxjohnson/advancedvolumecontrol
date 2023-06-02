@@ -34,13 +34,22 @@ const _ = ExtensionUtils.gettext;
 const Indicator = GObject.registerClass(
 class Indicator extends PanelMenu.Button {
 
-    // Function to call out to pactl shell command using Glib
-    // and return the volume level.
+    /**
+     * Call out to pactl using GLib and return the list of sinks.
+     *
+     * @returns {any}
+     */
     getSinks() {
         let [, stdout] = GLib.spawn_command_line_sync("pactl --format=json list sinks");
         return JSON.parse(ByteArray.toString(stdout));
     }
 
+    /**
+     * Use pactl to set the volume for a sink
+     *
+     * @param {int} id The numeric ID of the sink
+     * @param {int} volume The volume level between 0 and 100.
+     */
     setVolume(id, volume) {
         id = parseInt(id);
         volume = parseInt(volume);
@@ -51,6 +60,15 @@ class Indicator extends PanelMenu.Button {
         }
     }
 
+    /**
+     * Get the list of sinks, and display them in an indicator menu.
+     *
+     * The menu will contain a separator for each device, with the sinks in that device listed underneath.
+     * For each sink, the menu will contain a slider set to the current volume level.
+     * When the value of the slider is changed, the volume of that sink will be set based on the new value.
+     *
+     * @private
+     */
     _init() {
         super._init(0.0, _('Advanced volume control'));
 
@@ -86,8 +104,6 @@ class Indicator extends PanelMenu.Button {
         });
     }
 });
-
-
 
 class Extension {
     constructor(uuid) {
