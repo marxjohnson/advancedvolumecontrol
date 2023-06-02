@@ -52,10 +52,10 @@ class Indicator extends PanelMenu.Button {
     }
 
     _init() {
-        super._init(0.0, _('My Shiny Indicator'));
+        super._init(0.0, _('Advanced volume control'));
 
         this.add_child(new St.Icon({
-            icon_name: 'sound-symbolic',
+            icon_name: 'audio-speakers-symbolic',
             style_class: 'system-status-icon',
         }));
         // Add sound icon using St toolkit.
