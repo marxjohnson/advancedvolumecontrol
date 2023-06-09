@@ -86,7 +86,15 @@ class Indicator extends PanelMenu.Button {
                 const separator = new PopupMenu.PopupSeparatorMenuItem(lastDevice);
                 this.menu.addMenuItem(separator);
             }
-            const initialVolume = parseInt(sink.volume["front-left"]["value_percent"]);
+            let volume = null
+            if (sink.volume.hasOwnProperty('front-left')) {
+                volume = sink.volume["front-left"]["value_percent"];
+            } else if (sink.volume.hasOwnProperty('mono')) {
+                volume = sink.volume["mono"]["value_percent"];
+            } else {
+                return;
+            }
+            const initialVolume = parseInt(volume);
             const slider = new Slider.Slider(initialVolume / 100);
             let label = sink.properties["device.profile.description"];
             const item = new PopupMenu.PopupMenuItem(label, { activate: false });
