@@ -91,7 +91,7 @@ class Indicator extends PanelMenu.Button {
             let label = sink.properties["device.profile.description"];
             const item = new PopupMenu.PopupMenuItem(label, { activate: false });
             item.add_child(slider);
-            slider.connect('notify::value', (slider) => {
+            const handler = slider.connect('notify::value', (slider) => {
                 const volume = Math.floor(slider.value * 100);
                 this.setVolume(sink.index, volume);
             });
@@ -100,8 +100,16 @@ class Indicator extends PanelMenu.Button {
                 id: sink.index,
                 slider: slider,
                 menuItem: item,
+                handler: handler,
             });
         });
+    }
+
+    destroy() {
+        this._sinks.forEach((sink) => {
+            sink.slider.disconnect(sink.handler);
+        });
+        super.destroy();
     }
 });
 
