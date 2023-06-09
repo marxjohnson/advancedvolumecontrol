@@ -20,7 +20,7 @@
 
 const GETTEXT_DOMAIN = 'my-indicator-extension';
 
-const { GObject, GLib, St} = imports.gi;
+const {GObject, GLib, St} = imports.gi;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Main = imports.ui.main;
@@ -33,14 +33,13 @@ const _ = ExtensionUtils.gettext;
 
 const Indicator = GObject.registerClass(
 class Indicator extends PanelMenu.Button {
-
     /**
      * Call out to pactl using GLib and return the list of sinks.
      *
      * @returns {any}
      */
     getSinks() {
-        let [, stdout] = GLib.spawn_command_line_sync("pactl --format=json list sinks");
+        let [, stdout] = GLib.spawn_command_line_sync('pactl --format=json list sinks');
         return JSON.parse(ByteArray.toString(stdout));
     }
 
@@ -53,11 +52,10 @@ class Indicator extends PanelMenu.Button {
     setVolume(id, volume) {
         id = parseInt(id);
         volume = parseInt(volume);
-        const command = "pactl set-sink-volume " + id + " " + volume + "%";
+        const command = `pactl set-sink-volume ${id} ${volume}%`;
         let [ok, , stderr] = GLib.spawn_command_line_sync(command);
-        if (!ok) {
-            log("[ERROR] Could not set volume:" + ByteArray.toString(stderr));
-        }
+        if (!ok)
+            log(`[ERROR] Could not set volume: ${ByteArray.toString(stderr)}`);
     }
 
     /**
@@ -80,41 +78,40 @@ class Indicator extends PanelMenu.Button {
 
         this._sinks = [];
         let lastDevice = '';
-        this.getSinks().forEach((sink) => {
-            if (sink.properties["device.product.name"] !== lastDevice) {
-                lastDevice = sink.properties["device.product.name"];
+        this.getSinks().forEach(sink => {
+            if (sink.properties['device.product.name'] !== lastDevice) {
+                lastDevice = sink.properties['device.product.name'];
                 const separator = new PopupMenu.PopupSeparatorMenuItem(lastDevice);
                 this.menu.addMenuItem(separator);
             }
-            let volume = null
-            if (sink.volume.hasOwnProperty('front-left')) {
-                volume = sink.volume["front-left"]["value_percent"];
-            } else if (sink.volume.hasOwnProperty('mono')) {
-                volume = sink.volume["mono"]["value_percent"];
-            } else {
+            let volumeProperty = null;
+            if (sink.volume.hasOwnProperty('front-left'))
+                volumeProperty = sink.volume['front-left']['value_percent'];
+            else if (sink.volume.hasOwnProperty('mono'))
+                volumeProperty = sink.volume['mono']['value_percent'];
+            else
                 return;
-            }
-            const initialVolume = parseInt(volume);
+            const initialVolume = parseInt(volumeProperty);
             const slider = new Slider.Slider(initialVolume / 100);
-            let label = sink.properties["device.profile.description"];
-            const item = new PopupMenu.PopupMenuItem(label, { activate: false });
+            let label = sink.properties['device.profile.description'];
+            const item = new PopupMenu.PopupMenuItem(label, {activate: false});
             item.add_child(slider);
-            const handler = slider.connect('notify::value', (slider) => {
-                const volume = Math.floor(slider.value * 100);
+            const handler = slider.connect('notify::value', targetSlider => {
+                const volume = Math.floor(targetSlider.value * 100);
                 this.setVolume(sink.index, volume);
             });
-            this.menu.addMenuItem(item)
+            this.menu.addMenuItem(item);
             this._sinks.push({
                 id: sink.index,
-                slider: slider,
+                slider,
                 menuItem: item,
-                handler: handler,
+                handler,
             });
         });
     }
 
     destroy() {
-        this._sinks.forEach((sink) => {
+        this._sinks.forEach(sink => {
             sink.slider.disconnect(sink.handler);
         });
         super.destroy();
@@ -139,6 +136,12 @@ class Extension {
     }
 }
 
+/**
+ * Initialise extension
+ *
+ * @param {object} meta Extension metadata.
+ * @returns {Extension}
+ */
 function init(meta) {
     return new Extension(meta.uuid);
 }
