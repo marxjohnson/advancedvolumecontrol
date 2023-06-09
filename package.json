@@ -1,0 +1,25 @@
+{
+  "name": "advancedvolumecontrol",
+  "version": "1.0.0",
+  "description": "Advanced volume control extension for GNOME Shell",
+  "main": "extension.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marxjohnson/advancedvolumecontrol.git"
+  },
+  "author": "",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://github.com/marxjohnson/advancedvolumecontrol/issues"
+  },
+  "homepage": "https://github.com/marxjohnson/advancedvolumecontrol#readme",
+  "devDependencies": {
+    "eslint": "^8.42.0"
+  },
+  "dependencies": {
+    "eslint-plugin-jsdoc": "^46.2.6"
+  }
+}
