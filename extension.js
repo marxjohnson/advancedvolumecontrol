@@ -93,6 +93,7 @@ class Indicator extends PanelMenu.Button {
                 return;
             const initialVolume = parseInt(volumeProperty);
             const slider = new Slider.Slider(initialVolume / 100);
+            slider.set_style_class_name(slider.get_style_class_name() + ' advanced-volume-slider');
             let label = sink.properties['device.profile.description'] ?? sink.properties['device.description'];
             const item = new PopupMenu.PopupMenuItem(label, {activate: false});
             item.add_child(slider);
