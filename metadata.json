@@ -2,6 +2,7 @@
   "name": "Advanced Volume Control",
   "description": "Control volume of multiple sound interfaces",
   "uuid": "advancedvolumecontrol@mark.johnson.ubuntu.com",
+  "url": "https://github.com/marxjohnson/advancedvolumecontrol",
   "shell-version": [
     "42",
     "43",
