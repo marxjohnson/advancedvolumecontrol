@@ -1,0 +1,26 @@
+# German translation of the Advanced Volume Control GNOME Extension.
+# Copyright (C) 2023 Mark Johnson
+# This file is distributed under the same license as the Advanced Volume Control package.
+#
+# Philipp Kiemle <philipp.kiemle@gmail.com>, 2023.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Advanced Volume Control\n"
+"Report-Msgid-Bugs-To: https://github.com/marxjohnson/advancedvolumecontrol/"
+"issues\n"
+"POT-Creation-Date: 2023-07-24 22:45+0200\n"
+"PO-Revision-Date: 2023-07-24 22:45+0200\n"
+"Last-Translator: Philipp Kiemle <philipp.kiemle@gmail.com>\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#: extension.js:71
+msgid "Advanced volume control"
+msgstr "Erweiterter Lautstärkeregler"
