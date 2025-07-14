@@ -2,6 +2,8 @@
 
 A GNOME Shell extension providing volume control for multiple devices.
 
+This is no longer maintained as the improved handling of multiple devices in GNOME Shell 46 renders it obsolete.
+
 As discussed on the [Linux Matters podcast](https://linuxmatters.sh/).
 
 Get it from the [GNOME Extensions](https://extensions.gnome.org/extension/6036/advanced-volume-control/) site.
